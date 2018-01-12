@@ -1,6 +1,6 @@
 {
   "name": "nyco/wp-assets",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "package",
   "license": "GPL-3.0+",
   "description": "WordPress package for asset helpers.",
@@ -25,10 +25,10 @@
   },
   "scripts": {
     "lint": [
-      "vendor/bin/phpcs --standard=standard.xml --extensions=php --ignore=vendor/ ."
+      "vendor/bin/phpcs --standard=standard.xml --extensions=php --ignore=vendor/ ./dist"
     ],
     "format": [
-      "vendor/bin/phpcbf --standard=standard.xml --extensions=php --ignore=vendor/ ."
+      "vendor/bin/phpcbf --standard=standard.xml --extensions=php --ignore=vendor/ ./dist"
     ]
   }
 }

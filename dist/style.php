@@ -17,6 +17,7 @@ namespace Nyco\Enqueue;
  * @return [null]
  */
 function style($name = 'style', $min = '', $deps = [], $media = 'all') {
+
   $dir = get_template_directory();
 
   $files = array_filter(
