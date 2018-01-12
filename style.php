@@ -9,8 +9,6 @@ namespace Nyco\Enqueue;
  *                         Default: 'style'
  * @param [boolean] $min   Optional, The post fix for minified files.
  *                         Default: ''
- * @param [string]  $lang  Optional, the language code of the stylesheet.
- *                         Default: 'default'
  * @param [array]   $deps  Optional, maps to wp_enqueue_style $deps.
  *                         Default: array()
  * @param [string]  $media Optional, maps to wp_enqueue_style $media.
@@ -18,7 +16,7 @@ namespace Nyco\Enqueue;
  *
  * @return [null]
  */
-function styles($name = 'style', $min = '', $lang = 'default', $deps = [], $media = 'all') {
+function style($name = 'style', $min = '', $deps = [], $media = 'all') {
   $dir = get_template_directory();
 
   $files = array_filter(
@@ -29,8 +27,8 @@ function styles($name = 'style', $min = '', $lang = 'default', $deps = [], $medi
   );
 
   $hash = str_replace(["$name-", '.css'], '', array_values($files)[0]);
-  $min  = (isset($_GET['debug'])) ? '' : $min;
-  $uri  = get_template_directory_uri();
+  $min = (isset($_GET['debug'])) ? '' : $min;
+  $uri = get_template_directory_uri();
   $src = "$uri/$name-$hash$min.css";
 
   wp_enqueue_style($name, $src, $deps, null, $media);

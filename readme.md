@@ -12,9 +12,9 @@ composer require nyco/wp-assets
 `Nyco\Enqueue\style`
 
 Enqueues stylesheet with hashed filename for cache busting. Supports language
-code in file name. The naming pattern is `<name>-<language>-<hash><min>.css`.
-By default, the minified stylesheet will be enqueued. Add the url parameter `debug=1`
-to enqueue the non minified stylesheet. You will also need to supply the `$min`
+code in file name. The naming pattern is `<name>-<hash><min>.css`. By default,
+the minified stylesheet will be enqueued. Add the url parameter `debug=1` to
+enqueue the non minified stylesheet. You will also need to supply the `$min`
 string argument as there is no default.
 
 #### Usage
@@ -27,36 +27,31 @@ require_once(get_template_directory() . '/vendor/nyco/wp-assets/style');
 In `functions.php` or `single.php`, etc.
 ```
 Enqueue\style();
-// Enqueues `style-default-<hash>.css`
+// Enqueues "style-default-<hash>.css"
+
+Enqueue\style('style-sp', '');
+// Multi-lingual example. Enqueues "style-sp-<hash>.css"
 
 Enqueue\style('style', '.min');
-// Enqueues `style-default-<hash>.min.css` if ?debug=1
-// else, enqueues `style-default-<hash>.css`
-
-Enqueue\style('style', '', 'sp');
-// Enqueues `style-sp-<hash>.css`
+// Enqueues "style-<hash>.min.css" if ?debug=1 else, enqueues "style-<hash>.css"
 ```
 
 In template (twig).
 ```
 {{ function('Enqueue\\style') }}
-<!-- Enqueues `style-default-<hash>.css` -->
+{# Enqueues "style-<hash>.css" #}
+
+{{ function('Enqueue\\style', 'style-sp') }}
+{# Enqueues "style-sp-<hash>.css" #}
 
 {{ function('Enqueue\\style', 'style', '.min') }}
-<!--
-  Enqueues `style-default-<hash>.min.css` if ?debug=1
-  else, enqueues `style-default-<hash>.css`
--->
-
-{{ function('Enqueue\\style', 'style', '', 'sp') }}
-<!-- Enqueues `style-sp-<hash>.css` -->
+{# Enqueues "style-<hash>.min.css" if ?debug=1 else, enqueues "style-<hash>.css" #}
 ```
 
 #### Arguments
 
 * `[string]  $name ` Optional, The base name of the stylesheet source. Default: `'style'`
 * `[boolean] $min  ` Optional, The post fix for minified files. Default: `''`
-* `[string]  $lang ` Optional, the language code of the stylesheet. Default: `'default'`
 * `[array]   $deps ` Optional, maps to wp_enqueue_style `$deps`. Default: `array()`
 * `[string]  $media` Optional, maps to wp_enqueue_style `$media`. Default: `'all'`
 
@@ -94,10 +89,7 @@ In template (twig).
 {# Enqueues `main-<hash>.js` #}
 
 {{ function('Enqueue\\script', 'main', '.min') }}
-{#
-  Enqueues `main-<hash>.js` if ?debug=1
-  else, enqueues `main-<hash>.js`
-#}
+{# Enqueues `main-<hash>.js` if ?debug=1 else, enqueues `main-<hash>.js` #}
 
 {{ function('Enqueue\\script', 'view') }}
 {# Enqueues `view-<hash>.js` #}
@@ -110,7 +102,12 @@ In template (twig).
 * `[array]   $deps     ` Optional, maps to wp_enqueue_script `$deps`. Default: `array()`
 * `[array]   $in_footer` Optional, maps to wp_enqueue_script `$in_footer`. Default: `true`
 
+### Contributing
+
+Clone repository and create feature branch. Make changes and run `composer run lint`
+to follow the coding specification. `composer run format` can help fix some of the issues.
+
 ## To Do
 - [ ] Set up unit tests.
-- [ ] Publish to packagist.
-- [ ] Conduct environment tests.
+- [x] Publish to packagist.
+- [x] Conduct environment tests.
