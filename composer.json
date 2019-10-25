@@ -7,6 +7,11 @@
   "homepage": "https://github.com/cityofnewyork/nyco-wp-assets",
   "authors": [
     {
+      "name": "NYC Opportunity",
+      "email": "products@nycopportunity.nyc.gov",
+      "homepage": "https://nyc.gov/opportunity"
+    },
+    {
       "name": "Devon Hirth",
       "email": "dehirth@nycopportunity.nyc.gov",
       "homepage": "https://github.com/devowhippit"
