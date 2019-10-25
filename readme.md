@@ -4,18 +4,14 @@ Helpers for managing assets in Wordpress
 
 ## Installation
 
-```
-composer require nyco/wp-assets
-```
+    composer require nyco/wp-assets
 
 #### Usage
 
 Require in `functions.php`.
 
-```
-require_once(get_template_directory() . '/vendor/nyco/wp-assets/style');
-require_once(get_template_directory() . '/vendor/nyco/wp-assets/script');
-```
+    require_once(get_template_directory() . '/vendor/nyco/wp-assets/style');
+    require_once(get_template_directory() . '/vendor/nyco/wp-assets/script');
 
 ## Enqueue Style
 
@@ -26,44 +22,37 @@ code in file name. The naming pattern is `
 
 In `functions.php` or `single.php`, etc.
 
-```
-Enqueue\style();
-// Enqueues "style-default.<hash>.css"
+    Enqueue\style();
+    // Enqueues "style-default.<hash>.css"
 
-Enqueue\style('style-sp', '');
-// Enqueues "style-sp.<hash>.css"
+    Enqueue\style('style-sp', '');
+    // Enqueues "style-sp.<hash>.css"
 
-Enqueue\style('style', '', '-');
-// Enqueues "style-<hash>.css"
+    Enqueue\style('style', '', '-');
+    // Enqueues "style-<hash>.css"
 
-Enqueue\style('style', '.min');
-// Enqueues "style.<hash>.min.css" if ?debug=1 else, enqueues "style.<hash>.css"
-```
+    Enqueue\style('style', '.min');
+    // Enqueues "style.<hash>.min.css" if ?debug=1 else, enqueues "style.<hash>.css"
 
 In template (twig).
 
-```
-{{ function('Enqueue\\style') }}
-{# Enqueues "style.<hash>.css" #}
+    {{ function('Enqueue\\style') }}
+    {# Enqueues "style.<hash>.css" #}
 
-{{ function('Enqueue\\style', 'style-sp') }}
-{# Enqueues "style-sp.<hash>.css" #}
+    {{ function('Enqueue\\style', 'style-sp') }}
+    {# Enqueues "style-sp.<hash>.css" #}
 
-{{ function('Enqueue\\style', 'style', '-') }}
-{# Enqueues "style-<hash>.css" #}
+    {{ function('Enqueue\\style', 'style', '-') }}
+    {# Enqueues "style-<hash>.css" #}
 
-{{ function('Enqueue\\style', 'style', '.min') }}
-{# Enqueues "style.<hash>.min.css" if ?debug=1 else, enqueues "style.<hash>.css" #}
-```
+    {{ function('Enqueue\\style', 'style', '.min') }}
+    {# Enqueues "style.<hash>.min.css" if ?debug=1 else, enqueues "style.<hash>.css" #}
 
 ## Enqueue Script
 
 `Nyco\Enqueue\script`
 
-Enqueues script with hashed filename for cache busting. The naming pattern is
-`
-
-Both functions work the same, but have different arguments and must be required
+Enqueues script with hashed filename for cache busting. Both functions work the same, but have different arguments and must be required
 individually.
 
 #### Arguments
