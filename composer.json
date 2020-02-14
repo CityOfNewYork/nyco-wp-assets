@@ -1,6 +1,6 @@
 {
   "name": "nyco/wp-assets",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "type": "wordpress-muplugin",
   "license": "GPL-3.0+",
   "description": "A developer plugin with helpers for managing assets in WordPress.",
