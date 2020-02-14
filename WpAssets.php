@@ -41,9 +41,9 @@ class WpAssets {
    * @return  This
    */
   public function __construct() {
-    $this->templates = get_template_directory();
+    $this->templates = get_stylesheet_directory();
 
-    $this->uri = get_template_directory_uri();
+    $this->uri = get_stylesheet_directory_uri();
 
     $this->version = wp_get_theme()->version;
 
