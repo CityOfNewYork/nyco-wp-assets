@@ -82,7 +82,7 @@ class WpAssets {
      * Add the script
      */
 
-    wp_register_script($handle, $src, $deps, $ver, $in_footer);
+    $registered = wp_register_script($handle, $src, $deps, $ver, $in_footer);
 
     if ($enqueue) {
       wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
@@ -94,7 +94,7 @@ class WpAssets {
     return array(
       'source' => $src,
       'registered' => $registered,
-      'enqueued' => $enqueued
+      'enqueued' => $enqueue
     );
   }
 
