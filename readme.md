@@ -5,7 +5,7 @@ A developer plugin with helpers for managing assets in WordPress. It can be used
 * [Installation](#installation-using-composer)
 * [Usage](#usage)
 * [Documentation](#documentation)
-* [Query Monitor Add On](#query-monitor-add-on)
+* [Query Monitor Add-on](#query-monitor-add-on)
 
 ## Installation using [Composer](https://getcomposer.org/)
 
@@ -267,11 +267,11 @@ Uses an array of configuration objects to register WP Rest Routes that act as Ja
 
 [Back to top](#documentation)
 
-## Query Monitor Add On
+## Query Monitor Add-on
 
-This plugin ships with an add on for [Query Monitor](https://querymonitor.com/) that displays the available integrations to the [Load Integrations method](#load-integrations). It uses the same method to display the details of the **config/integrations.yml** file.
+This plugin ships with an add-on for [Query Monitor](https://querymonitor.com/) that displays the *available* integrations to the [Load Integrations method](#load-integrations) and compares them to integrations that are registered. It uses the same method to display the details of the **config/integrations.yml** file.
 
-![Query Monitor add on preview](query-monitor.png)
+![Query Monitor Add-on preview](query-monitor.png)
 
 ---
 

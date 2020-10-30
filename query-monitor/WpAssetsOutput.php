@@ -25,66 +25,97 @@ class WpAssetsOutput extends \QM_Output_Html {
    * @return  String  The output
    */
   public function output() {
-    $integrations = $this->collector->get_data();
+    $data = $this->collector->get_data();
+
+    $integrations = $data['integrations'];
 
     $headers = array(
       __('Handle'),
-      __('Main path'),
-      __('In footer?')
+      __('Configuration'),
+      __('Registered'),
+      __('Position'),
+      __('Queue')
     );
 
     $echo = array();
 
     // phpcs:disable
-    $echo[] = '<div class="qm" id="' . esc_attr($this->collector->id()) . '">';
-    $echo[] = '  <table>';
-    $echo[] = '    <thead>';
-    $echo[] = '      <tr>';
+    $echo[] = '<div class="qm" id="' . esc_attr($this->collector->id()) . '"><table>';
 
-    foreach ($headers as $header) {
-      $echo[] = '<th scope="col">' . $header . '</th>';
-    }
+    // Table column header
+    $echo[] = '<thead><tr>';
+    foreach ($headers as $header) $echo[] = '<th scope="col">' . $header . '</th>';
+    $echo[] = '</tr></thead>';
 
-    $echo[] = '      </tr>';
-    $echo[] = '    </thead>';
-    $echo[] = '    <tbody>';
-
+    // Table body
+    $echo[] = '<tbody>';
     foreach ($integrations as $i) {
       $echo[] = '<tr class="qm-odd">';
-      $echo[] = '  <td class="qm-nowrap qm-ltr">' . $i['handle'] . '</td>';
 
-      $echo[] = '  <td class="qm-row-caller qm-ltr qm-has-toggle qm-nowrap">';
-      $echo[] = '    <button class="qm-toggle" data-on="+" data-off="-" aria-expanded="false" aria-label="Toggle more information">+</button>';
+      // Handle column
+      $echo[] = '<td class="qm-nowrap qm-ltr">' . $i['handle'] . '</td>';
 
-      $echo[] = '    <ol>';
-      $echo[] = '      <li>';
-      $echo[] = '        <code>' . ((array_key_exists('path', $i)) ? $i['path'] : 'none') . '</code>';
-      $echo[] = '      </li>';
+      // Configuration column
+      $echo[] = '<td class="qm-row-caller qm-ltr qm-has-toggle qm-nowrap">';
+      $echo[] = '  <button class="qm-toggle" data-on="+" data-off="-" aria-expanded="false" aria-label="Toggle more information">+</button>';
+      $echo[] = '  <ol>';
+      $echo[] = '    <li>Path: <code>' . ((isset($i['path'])) ? $i['path'] : 'none') . '</code></li>';
+      $echo[] = '    <div class="qm-toggled">';
+      $echo[] = ((isset($i['dep'])) ? '<li class="qm-info qm-supplemental">Constant Dependency: ' . $i['dep'] . '</li>' : '');
+      $echo[] = ((isset($i['localize'])) ? '<li class="qm-info qm-supplemental">Localized constants: <br> - ' . implode('<br> - ', $i['localize']) . '</li>' : '');
+      $echo[] = ((isset($i['inline'])) ? '<li class="qm-info qm-supplemental">Inline script: ' . $i['inline']['path'] . '<br> Inline position: ' . $i['inline']['position'] . '</li>' : '');
+      $echo[] = ((isset($i['style'])) ? '<li class="qm-info qm-supplemental">Stylesheet: ' . $i['style']['path'] . '</li>' : '');
+      $echo[] = ((isset($i['body_open'])) ? '<li class="qm-info qm-supplemental">Body tag: ' . $i['body_open']['path'] . '</li>' : '');
+      $echo[] = '    </div>';
+      $echo[] = '  </ol>';
+      $echo[] = '</td>';
 
-      $echo[] = '      <div class="qm-toggled">';
-      $echo[] = ((array_key_exists('dep', $i)) ? '<li>Constant Dependency: ' . $i['dep'] . '</li>' : '');
-      $echo[] = ((array_key_exists('localize', $i)) ? '<li>Localized Constants: ' . implode(', ', $i['localize']) . '</li>' : '');
-      $echo[] = ((array_key_exists('inline', $i)) ? '<li>Inline script: ' . $i['inline']['path'] . '<br> Inline position: ' . $i['inline']['position'] . '</li>' : '');
-      $echo[] = ((array_key_exists('style', $i)) ? '<li>Stylesheet: ' . $i['style']['path'] . '</li>' : '');
-      $echo[] = ((array_key_exists('body_open', $i)) ? '<li>Body tag: ' . $i['body_open']['path'] . '</li>' : '');
-      $echo[] = '      </div>';
-      $echo[] = '    </ol>';
-      $echo[] = '  </td>';
+      // Registered Column
+      $echo[] = '<td class="qm-row-caller qm-ltr qm-has-toggle qm-nowrap">';
+      if ($i['registered']) {
+        if ($i['registered']->extra)
+          $echo[] = '<button class="qm-toggle" data-on="+" data-off="-" aria-expanded="false" aria-label="Toggle more information">+</button>';
 
-      $echo[] = '  <td class="qm-nowrap qm-ltr">' . (($i['in_footer']) ? 'true' : 'false') . '</td>';
+        $echo[] = '<ol>';
+        $echo[] = '<li><code>' . $i['registered']->src . '</code></li>';
+
+        // Registered Output
+        $echo[] = '<div class="qm-toggled">';
+
+        $extra = $i['registered']->extra;
+        if ($extra && isset($extra['after'])) {
+          $echo[] = '<pre class="qm-info qm-supplemental">' .
+            $extra['after'][1] . '</pre>';
+        }
+
+        if ($extra && isset($extra['before'])) {
+          $echo[] = '<pre class="qm-info qm-supplemental">' .
+            $extra['before'][1] . '</pre>';
+        }
+
+        $echo[] = '</div>';
+        $echo[] = '</ol>';
+      } else {
+        $echo[] = 'false';
+      }
+      $echo[] = '</td>';
+
+      // Position and queue columns
+      $echo[] = '<td class="qm-nowrap qm-ltr">' .
+        (($i['in_footer']) ? 'footer' : 'head') . '</td>';
+      $echo[] = '<td class="qm-nowrap qm-ltr">' .
+        (($i['queue'] !== false) ? $i['queue'] : 'false') . '</td>';
       $echo[] = '</tr>';
     }
+    $echo[] = '</tbody>';
 
-    $echo[] = '    </tbody>';
-    $echo[] = '    <tfoot>';
-    $echo[] = '      <tr>';
+    // Table footer with the total integration count
+    $echo[] = '<tfoot><tr>';
+    $echo[] = '<td colspan="' . count($headers) . '">Total: ' .
+      count($integrations) . '</td>';
+    $echo[] = '</tr></tfoot>';
 
-    $echo[] = '        <td colspan="' . count($headers) . '">Total: ' . count($integrations) . '</td>';
-
-    $echo[] = '      </tr>';
-    $echo[] = '    </tfoot>';
-    $echo[] = '  </table>';
-    $echo[] = '</div>';
+    $echo[] = '</table></div>';
     // phpcs:enable
 
     echo implode('', $echo);
