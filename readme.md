@@ -134,8 +134,8 @@ This will scan the default style assets directory *assets/styles/* of the curren
 
     ->addAttr( ...args )
 
-Uses the [`script_loader_tag`](https://developer.wordpress.org/reference/hooks/script_loader_tag/) filter to add an attribute and a value to a specific script for example crossorigin="anonymous". 
-To add attributes such as `async` or `defer` which don't required to be set to a value just set those attributes in the `integrations.yml` file to `true`.
+Uses the [`script_loader_tag`](https://developer.wordpress.org/reference/hooks/script_loader_tag/) filter to add an attribute and a value to a specific script. For example; crossorigin="anonymous". 
+Attribute values may be strings. To add a boolean attribute such as `async` or `defer` pass `true`."
 
 **...args**
 

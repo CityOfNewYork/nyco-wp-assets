@@ -182,7 +182,7 @@ class WpAssets {
   public function addAttr($name, $attr, $value) {
     add_filter('script_loader_tag', function ($tag, $handle) use ($name, $attr, $value) {
       if ($name === $handle) {
-        $script = '<script '.(is_bool($value) ? "$attr " : "$attr=$value" ).'$1';
+        $script = '<script ' . (is_bool($value) ? "$attr " : "$attr=$value " ) . '$1';
         return preg_replace('/<script( )*/', $script, $tag);
       } else {
         return $tag;
@@ -343,7 +343,7 @@ class WpAssets {
 
     if ($s['attrs']) {
       foreach ($s['attrs'] as $attr => $value) {
-          self::addAttr($s['handle'], $attr, $value);
+        self::addAttr($s['handle'], $attr, $value);
       }
     }
 
