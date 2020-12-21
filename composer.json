@@ -45,6 +45,9 @@
     ],
     "fix": [
       "vendor/bin/phpcbf --standard=standard.xml --extensions=php"
+    ],
+    "publish": [
+      "git push && git push --tags"
     ]
   }
 }
