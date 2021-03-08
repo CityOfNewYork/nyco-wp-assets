@@ -259,7 +259,9 @@ class WpAssets {
    * @return  Array  The same array with additional inline script contents
    */
   public function addInline($script) {
-    if (array_key_exists('dep', $script) && !defined($script['dep'])) {
+    $option = get_option($script['option_name'], false);
+
+    if (array_key_exists('dep', $script) && !defined($script['dep']) && $option) {
       return $script;
     }
 
