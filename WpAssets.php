@@ -368,7 +368,7 @@ class WpAssets {
    *
    */
   private function getOptionValue($optionName) {
-    $value = get_option($this->optionNamespace . $optionName, 'NA');
+    $value = get_option($this->optionNamespace . $optionName, 'ON');
     $value = filter_var($value, FILTER_VALIDATE_BOOLEAN);
 
     return $value;
